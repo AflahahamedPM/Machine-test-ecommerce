@@ -4,29 +4,10 @@ import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import CategoryProductCard from "./CategoryProductCard";
 import Footer from "./Footer";
+import useCategoryProductFetch from "../hooks/useCategoryProducts";
 
 const CategoryProductList = () => {
-  const [categoryProducts, setCategoryProducts] = useState([]);
-
-  const{name} = useParams();
-
-  useEffect(() => {
-    getCategoryProducts();
-  }, [name]);
-
-  const getCategoryProducts = async () => {
-    const response = await fetch(`${SERVER_LINK}/categoryProduct`,{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({category:name})
-    });
-    const data = await response.json();
-    console.log(data.data);
-    setCategoryProducts(data.data);
-  };
-
+  const {categoryProducts} = useCategoryProductFetch()
   return (
     <>
      <Navbar/>

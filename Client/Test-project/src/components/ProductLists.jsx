@@ -1,21 +1,10 @@
-import { SERVER_LINK } from "../constants";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import ProductCard from "./ProductCard";
-import { useEffect, useState } from "react";
+import useProductFetch from "../hooks/UseProductFetch"
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getProducts = async () => {
-    const response = await fetch(`${SERVER_LINK}/allProducts`);
-    const data = await response.json();
-    console.log(data.data);
-    setProducts(data.data);
-  };
+  const{products} = useProductFetch()
   return (
     <>
      <Navbar/>
