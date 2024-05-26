@@ -8,9 +8,10 @@ const CartCardComponent = ({ data }) => {
   const [cartProduct, setCartProduct] = useState([]);
   const { name, price, quantity} = data;
   const navigate = useNavigate()
+  const [deleted ,setDeleted] = useState(1)
   useEffect(() => {
     fetchProduct();
-  }, []);
+  }, [deleted]);
 
   const fetchProduct = async () => {
     const response = await fetch(`${SERVER_LINK}/cartSingleProductDetails`, {
@@ -38,9 +39,7 @@ const CartCardComponent = ({ data }) => {
         })
         const data = await response.json()
         if(response.ok && data.data === "succesfully removed"){
-            setTimeout(()=>{
-                navigate("/cart")
-            },3000)
+            setDeleted(deleted+1);
             
         }else{
             navigate("/login")

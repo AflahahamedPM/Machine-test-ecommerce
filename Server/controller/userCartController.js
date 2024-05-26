@@ -7,6 +7,7 @@ export const showCart = async (req, res) => {
   try {
     const { _id } = req.body.data;
     const cartProducts = await cartCollection.findOne({ customer: _id });
+    console.log("cart-id - ",cartProducts);
     res.json({ data: cartProducts });
   } catch (err) {
     res.json({ error: err });
