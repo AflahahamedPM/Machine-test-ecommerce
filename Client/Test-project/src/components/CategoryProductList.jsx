@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import { SERVER_LINK } from "../constants";
-import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import CategoryProductCard from "./CategoryProductCard";
 import Footer from "./Footer";

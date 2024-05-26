@@ -4,29 +4,13 @@ import { SERVER_LINK } from "../constants";
 import SimilarProductsCard from "./SimilarProductsCard";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import useSingleProductFetch from "../hooks/useSingleProductFetch";
 
 const SingleProductCard = () => {
-  const [singleProduct, setSingleProduct] = useState([]);
-  const [similarProducts, setSimilarProducts] = useState([])
-  const { _id } = useParams();
+const {singleProduct, similarProducts} = useSingleProductFetch()
+
   const navigate = useNavigate()
-
-  useEffect(() => {
-    getSingleProduct();
-  }, [_id]);
-
-  const getSingleProduct = async () => {
-    const response = await fetch(`${SERVER_LINK}/singleProduct`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ productId: _id }),
-    });
-    const data = await response.json();
-    setSingleProduct(data.data);
-    setSimilarProducts(data.similarProducts)
-  };
+  const { _id } = useParams();
 
   const handleCart = async() => {
     let userDetails = localStorage.getItem("user")

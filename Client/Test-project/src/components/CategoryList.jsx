@@ -1,18 +1,8 @@
-import { SERVER_LINK } from "../constants";
+import useCategoryList from "../hooks/useCategoryList";
 import CategoryCard from "./CategoryCard";
-import { useEffect, useState } from "react";
 
 const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    getCategories();
-  }, []);
-
-  const getCategories = async () => {
-    const response = await fetch(`${SERVER_LINK}/allCategories`);
-    const data = await response.json();
-    setCategories(data.data);
-  };
+    const {categories} = useCategoryList()  
 
   return (
     <>
