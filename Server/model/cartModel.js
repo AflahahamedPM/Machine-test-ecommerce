@@ -1,6 +1,6 @@
 import mongoose, { mongo } from "mongoose";
-import userInfo from "./userModel";
-import productCollection from "./productModel";
+import userInfo from "./userModel.js";
+import {productCollection} from "./productModel.js";
 
 const cartSchema = new mongoose.Schema({
     customer:{

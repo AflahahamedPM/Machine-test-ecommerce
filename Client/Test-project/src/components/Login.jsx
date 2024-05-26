@@ -23,7 +23,7 @@ const Login = () => {
               body:JSON.stringify(data)
             })
             const responseData = await response.json()
-            console.log(responseData);
+            localStorage.setItem("user", JSON.stringify(responseData));
             if(response.ok && responseData.message === "succesfully logged in"){
               navigate("/home")
             }
@@ -38,7 +38,7 @@ const Login = () => {
             <div className="w-6/12 h-3/6 border border-gray-400 rounded-lg p-3">
               <form onSubmit={handleLoginSubmit}>
               <input
-                type="text"
+                type="email"
                 className="border border-gray-600 p-2 mb-4 rounded-lg w-full"
                 placeholder="email address"
                 value={email}

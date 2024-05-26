@@ -25,7 +25,6 @@ export const getSingleProduct = async (req,res) => {
         const getProduct = await productCollection.findById(productId)
         const productCategory = getProduct.category
         const similarProducts = await productCollection.find({category:productCategory}).limit(3).sort({createdAt:-1})
-        console.log(similarProducts)
         res.json({data:getProduct,similarProducts:similarProducts})
     } catch (err) {
         res.json({error:err})

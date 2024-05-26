@@ -29,7 +29,7 @@ function Signup() {
       console.log("response data - ",responseData);
       if (response.ok && responseData.message === "user added") {
         console.log('Success:', responseData);
-        navigate('/'); // Navigate to the login page on success
+        navigate('/login'); // Navigate to the login page on success
       } else {
         console.error('Error:', response.statusText);
       }

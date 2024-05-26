@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SERVER_LINK } from "../constants";
 import SimilarProductsCard from "./SimilarProductsCard";
 import Navbar from "./Navbar";
@@ -8,6 +8,7 @@ const SingleProductCard = () => {
   const [singleProduct, setSingleProduct] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([])
   const { _id } = useParams();
+  const navigate = useNavigate()
 
   useEffect(() => {
     getSingleProduct();
@@ -22,11 +23,28 @@ const SingleProductCard = () => {
       body: JSON.stringify({ productId: _id }),
     });
     const data = await response.json();
-    console.log("single product details - ", data.data);
-    console.log("similar products - ",data.similarProducts);
     setSingleProduct(data.data);
     setSimilarProducts(data.similarProducts)
   };
+
+  const handleCart = async() => {
+    let userDetails = localStorage.getItem("user")
+    if(!userDetails){
+      navigate("/login")  
+    }
+    userDetails = JSON.parse(userDetails)
+    console.log(userDetails);
+
+    const addToCart = await fetch(`${SERVER_LINK}/addToCart`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({userInfo:userDetails.data,productId:_id})
+    })
+    const response = await addToCart.json()
+    console.log(response);
+  }
 
   return (
     <>
@@ -56,7 +74,7 @@ const SingleProductCard = () => {
                   Rs.{singleProduct.price}
                 </h1>
                 <div className="lg:p-4">
-                  <button className="lg:mt-28 max-lg:mt-16 max-sm:mt-6 lg:px-36 max-lg:px-20 max-sm:px-12 max-sm:-ml-12 sm:py-5 max-sm:py-3 rounded-lg bg-zinc-600 hover:bg-zinc-800 text-white">
+                  <button className="lg:mt-28 max-lg:mt-16 max-sm:mt-6 lg:px-36 max-lg:px-20 max-sm:px-12 max-sm:-ml-12 sm:py-5 max-sm:py-3 rounded-lg bg-zinc-600 hover:bg-zinc-800 text-white" onClick={handleCart}>
                     Add to cart
                   </button>
                 </div>

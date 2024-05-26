@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { SERVER_LINK } from "../constants";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [isLoggedin, setIsLoggedin] = useState(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -13,12 +16,43 @@ const Navbar = () => {
   const getCategories = async () => {
     const response = await fetch(`${SERVER_LINK}/allCategories`);
     const data = await response.json();
+    let userDetails = localStorage.getItem("user");
+    userDetails = JSON.parse(userDetails)
+    if (userDetails) {
+      setIsLoggedin(userDetails);
+    }
     setCategories(data.data);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setIsLoggedin(null);
+    navigate("/");
   };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const showCart = async ()=>{
+    let userDetails = localStorage.getItem("user")
+    userDetails = JSON.parse(userDetails)
+    if(!userDetails){
+      navigate("/login")
+    }else{
+      const cartResponse = await fetch(`${SERVER_LINK}/cart`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({data:userDetails.data})
+      })
+      const data = await cartResponse.json()
+      console.log(data.data);
+      navigate("/cart",{state:{data}})
+
+    }
+  }
 
   return (
     <nav className="bg-white py-4">
@@ -47,12 +81,21 @@ const Navbar = () => {
             <Link to="/">HEAVENLY</Link>
           </div>
           <div className="hidden lg:flex space-x-4 uppercase text-gray-800 font-semibold tracking-wide">
-            <Link to="/cart" className="hover:text-gray-600">
+            {
+              isLoggedin === null ? "" : <p className="text-sm font-normal mt-[2px]">Hello {isLoggedin?.data?.name}</p>
+            }
+            <button onClick={showCart} className="hover:text-gray-600">
               CART
-            </Link>
-            <Link to="/login" className="hover:text-gray-600">
-              LOGIN
-            </Link>
+            </button>
+            {isLoggedin === null ? (
+              <Link to="/login" className="hover:text-gray-600">
+                LOGIN
+              </Link>
+            ) : (
+              <button className="hover:text-gray-600" onClick={handleLogout}>
+                LOGOUT
+              </button>
+            )}
           </div>
           <div className="-mr-2 flex lg:hidden">
             <button
@@ -93,18 +136,27 @@ const Navbar = () => {
               {category.name.toUpperCase()}
             </Link>
           ))}
-          <Link
-            to="/cart"
+          <button
+            onClick={showCart}
             className="text-gray-800 hover:text-gray-600 block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wide"
           >
             CART
-          </Link>
-          <Link
-            to="/login"
-            className="text-gray-800 hover:text-gray-600 block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wide"
-          >
-            LOGIN
-          </Link>
+          </button>
+          {isLoggedin === null ? (
+            <Link
+              to="/login"
+              className="text-gray-800 hover:text-gray-600 block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wide"
+            >
+              LOGIN
+            </Link>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="text-gray-800 hover:text-gray-600 block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wide"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>
