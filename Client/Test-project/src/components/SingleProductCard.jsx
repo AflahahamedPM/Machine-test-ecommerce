@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { SERVER_LINK } from "../constants";
 import SimilarProductsCard from "./SimilarProductsCard";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const SingleProductCard = () => {
   const [singleProduct, setSingleProduct] = useState([]);
@@ -97,6 +98,7 @@ const SingleProductCard = () => {
       ) : (
         <p>Loading...</p>
       )}
+      <Footer/>
     </>
   );
 };

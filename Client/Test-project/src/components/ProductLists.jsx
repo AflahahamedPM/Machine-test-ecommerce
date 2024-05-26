@@ -1,4 +1,5 @@
 import { SERVER_LINK } from "../constants";
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
@@ -27,6 +28,7 @@ const ProductList = () => {
           <p>Loading...</p>
         )}
       </div>
+      <Footer />
     </>
   );
 };

@@ -3,6 +3,7 @@ import { SERVER_LINK } from "../constants";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import CategoryProductCard from "./CategoryProductCard";
+import Footer from "./Footer";
 
 const CategoryProductList = () => {
   const [categoryProducts, setCategoryProducts] = useState([]);
@@ -38,6 +39,7 @@ const CategoryProductList = () => {
           <p>Loading...</p>
         )}
       </div>
+      <Footer />
     </>
   );
 };
