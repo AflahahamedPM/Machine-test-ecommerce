@@ -8,6 +8,6 @@ dbConnection()
 
 app.use(express.json())
 app.use(cors({origin:"http://localhost:5173"}))
-app.use("/",route)
+app.get("/",route)
 
 app.listen(5000,()=>{console.log("server listen in port 5000")})
