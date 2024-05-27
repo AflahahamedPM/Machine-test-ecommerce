@@ -29,6 +29,7 @@ const {singleProduct, similarProducts} = useSingleProductFetch()
       body:JSON.stringify({userInfo:userDetails.data,productId:_id})
     })
     const response = await addToCart.json()
+    console.log(response);
     if(response.data === "product count added"){
     toast.success("Product count added", {
       position: "top-right",
@@ -36,7 +37,7 @@ const {singleProduct, similarProducts} = useSingleProductFetch()
       theme: "colored",
     });
   } else if (response.data === "product added"){
-    toast.error("Product added", {
+    toast.success("Product added", {
       position: "top-right",
       autoClose: 3000,
       theme: "colored",
