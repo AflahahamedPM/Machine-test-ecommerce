@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { SERVER_LINK } from "../constants";
 import SimilarProductsCard from "./SimilarProductsCard";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import useSingleProductFetch from "../hooks/useSingleProductFetch";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SingleProductCard = () => {
 const {singleProduct, similarProducts} = useSingleProductFetch()
@@ -28,7 +29,19 @@ const {singleProduct, similarProducts} = useSingleProductFetch()
       body:JSON.stringify({userInfo:userDetails.data,productId:_id})
     })
     const response = await addToCart.json()
-    console.log(response);
+    if(response.data === "product count added"){
+    toast.success("Product count added", {
+      position: "top-right",
+      autoClose: 3000,
+      theme: "colored",
+    });
+  } else if (response.data === "product added"){
+    toast.error("Product added", {
+      position: "top-right",
+      autoClose: 3000,
+      theme: "colored",
+    });
+  }
   }
 
   return (
