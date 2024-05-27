@@ -61,7 +61,7 @@ function Signup() {
           className="border border-gray-600 p-2 mb-4 mt-5 rounded-lg w-full"
           value={password}
           onChange={(e)=>{setPassword(e.target.value)}}
-          placeholder="password"
+          placeholder="password require more than 5 characters"
         />
         <div className="flex justify-center">
           <button type="submit" className="bg-blue-600 hover:bg-blue-700 p-3 px-8 mb-4 rounded-lg flex justify-center items-center">
