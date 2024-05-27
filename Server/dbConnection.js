@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 function dbConnection(){
-    mongoose.connect("mongodb://localhost:27017/test2")
+    mongoose.connect("mongodb+srv://pmsamshad91:dgFmDwFcrAuzfFHw@cluster0.8xtbk7s.mongodb.net/test2?retryWrites=true&w=majority&appName=Cluster0")
     .then(()=>{
         console.log('connected to database');
     })
